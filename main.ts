@@ -38,7 +38,7 @@ export const caseFunctions = {
   sentenceCase,
   snakeCase,
   trainCase,
-};
+} as const;
 
 /**
  * A union type representing the valid keys of `caseFunctions`.
@@ -65,7 +65,7 @@ export type CaseTypes = keyof typeof caseFunctions;
  * console.log(caseTypes.has("invalidCase")); // false
  * ```
  */
-export const caseTypes = new Set(Object.keys(caseFunctions));
+export const caseTypes: Set<CaseTypes> = new Set<CaseTypes>(Object.keys(caseFunctions) as CaseTypes[]);
 
 /**
  * Ensures that a given case type is valid by checking it against `caseTypes`.
@@ -83,7 +83,7 @@ export const caseTypes = new Set(Object.keys(caseFunctions));
  * ```
  */
 export function assertCaseType(
-  caseType?: string,
+  caseType?: CaseTypes,
 ): asserts caseType is CaseTypes {
   if (!caseType || !caseTypes.has(caseType)) {
     throw new TypeError("Invalid case type.");

@@ -1,6 +1,6 @@
 import { assert, assertEquals, assertThrows } from "@std/assert";
 
-import { assertCaseType, assertValue, caseFunctions, caseTypes, toCase } from "./main.ts";
+import { assertCaseType, assertValue, caseFunctions, type CaseTypes, caseTypes, toCase } from "./main.ts";
 
 Deno.test("caseFunctions contains all expected case functions", () => {
   const expectedFunctions = [
@@ -37,8 +37,8 @@ Deno.test("caseTypes contains all expected case function keys", () => {
     "snakeCase",
     "trainCase",
   ];
-  for (const fn of expectedFunctions) {
-    assert(caseTypes.has(fn), `caseTypes is missing key: ${fn}`);
+  for (const functionKey of expectedFunctions) {
+    assert(caseTypes.has(functionKey as CaseTypes), `caseTypes is missing key: ${functionKey}`);
   }
 });
 
@@ -48,7 +48,7 @@ Deno.test("assertCaseType validates valid case types", () => {
 
 Deno.test("assertCaseType throws error for invalid case types", () => {
   assertThrows(
-    () => assertCaseType("invalidCase"),
+    () => assertCaseType("invalidCase" as CaseTypes),
     TypeError,
     "Invalid case type.",
   );
@@ -73,7 +73,7 @@ Deno.test("toCase converts string to specified case type", () => {
 
 Deno.test("toCase throws error for invalid case type", () => {
   assertThrows(
-    () => toCase("invalidCase" as any, "test string"),
+    () => toCase("invalidCase" as CaseTypes, "test string"),
     TypeError,
     "Invalid case type.",
   );
