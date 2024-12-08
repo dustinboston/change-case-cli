@@ -1,16 +1,6 @@
-import {
-  assertEquals,
-  assertThrows,
-  assert,
-} from "@std/assert";
+import { assert, assertEquals, assertThrows } from "@std/assert";
 
-import {
-  caseFunctions,
-  caseTypes,
-  assertCaseType,
-  assertValue,
-  toCase,
-} from "./main.ts";
+import { assertCaseType, assertValue, caseFunctions, caseTypes, toCase } from "./main.ts";
 
 Deno.test("caseFunctions contains all expected case functions", () => {
   const expectedFunctions = [
