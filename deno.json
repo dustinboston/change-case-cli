@@ -1,0 +1,37 @@
+{
+  "name": "@dustinboston/change-case-cli",
+  "version": "1.0.0",
+  "exports": {
+  },
+  "imports": {
+    ".": "/mod.ts",
+    "./main": "/main.ts",
+    "@std/assert": "jsr:@std/assert@^1.0.9",
+    "@std/cli": "jsr:@std/cli@^1.0.8",
+    "change-case": "npm:change-case@^5.4.4"
+  },
+  "publish": {
+    "include": [
+      "LICENSE",
+      "README.md",
+      "main.ts",
+      "mod.ts"
+    ],
+    "exclude": [
+      "*test.ts"
+    ]
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": false,
+    "proseWrap": "always",
+    "include": ["*.json", "*.md", "*.ts"]
+  },
+  "tasks": {
+    "dev": "deno run --watch mod.ts",
+    "build-linux": "deno compile --target x86_64-unknown-linux-gnu --output change_case ./mod.ts"
+  }
+}
