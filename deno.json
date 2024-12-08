@@ -1,8 +1,8 @@
 {
   "name": "@dustinboston/change-case-cli",
   "version": "1.0.0",
-  "exports": {
-  },
+  "license": "GPL-3.0-or-later",
+  "exports": "./mod.ts",
   "imports": {
     ".": "/mod.ts",
     "./main": "/main.ts",
