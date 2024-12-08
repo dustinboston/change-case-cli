@@ -101,10 +101,10 @@ For a full list of case types and their meanings, visit the
 ### Using Deno
 
 ```bash
-deno run --allow-read --allow-env --allow-net jsr:change-case-cli --case camelCase "test string"
+deno run jsr:change-case-cli --case camelCase "test string"
 # Output: testString
 
-deno run --allow-read --allow-env --allow-net jsr:change-case-cli --case snakeCase "test string"
+deno run jsr:change-case-cli --case snakeCase "test string"
 # Output: test_string
 ```
 
@@ -116,6 +116,51 @@ npx @dustinboston/change-case-cli --case kebabCase "Hello World"
 
 change_case --case constantCase "some value"
 # Output: SOME_VALUE
+```
+
+## With Bash
+
+This is a real-world example of changing the case of directories and files. It assumes that the binary has been
+downloaded but it could be changed to use one of the methods above.
+
+```bash
+#!/bin/bash
+
+# Recursively rename all files and directories to PascalCase, preserving extensions
+
+find . -depth | while read -r FILE; do 
+  # Ensure FILE is not empty
+  if [ -z "$FILE" ]; then
+    continue
+  fi
+
+  # Extract the directory, base name, and extension
+  DIRNAME=$(dirname "$FILE")
+  BASENAME=$(basename "$FILE")
+  EXTENSION=""
+
+  # Separate extension if it's a file (has a dot in the name)
+  if [[ "$BASENAME" == *.* ]]; then
+    EXTENSION=".${BASENAME##*.}" # Everything after the last dot
+    BASENAME="${BASENAME%.*}"   # Everything before the last dot
+  fi
+
+  # Ensure BASENAME is not empty
+  if [ -z "$BASENAME" ]; then
+    continue
+  fi
+
+  # Convert the base name to PascalCase
+  NEWNAME=$(~/Scripts/change_case --case pascalCase "$BASENAME")$EXTENSION
+
+  # Skip renaming if the new name matches the old name
+  if [ "$BASENAME$EXTENSION" = "$NEWNAME" ]; then
+    continue
+  fi
+
+  # Rename the file or directory
+  mv "$FILE" "$DIRNAME/$NEWNAME"
+done
 ```
 
 ---
